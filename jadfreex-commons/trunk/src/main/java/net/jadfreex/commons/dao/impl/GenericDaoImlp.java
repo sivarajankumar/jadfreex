@@ -20,11 +20,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 //TODO Documentar
-public abstract class GenericHibernteDaoImlp<T, PK extends Serializable>
+public abstract class GenericDaoImlp<T, PK extends Serializable>
 		implements GenericDao<T, PK> {
 
 	protected static final Logger log = LoggerFactory
-			.getLogger(GenericHibernteDaoImlp.class);
+			.getLogger(GenericDaoImlp.class);
 
 	@Autowired
 	protected SessionFactory sessionFactory;
