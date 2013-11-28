@@ -1,4 +1,4 @@
-package net.jadfreex.swingview.usuario;
+package net.jadfreex.swingview.app;
 
 import net.jadfreex.swingview.commons.AppContext;
 
