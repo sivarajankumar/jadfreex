@@ -54,16 +54,7 @@ public class TipoUsuario {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("TipoUsuario [");
-		if (id != null)
-			builder.append("id=").append(id).append(", ");
-		if (nombre != null)
-			builder.append("nombre=").append(nombre).append(", ");
-		if (descripcion != null)
-			builder.append("descripcion=").append(descripcion);
-		builder.append("]");
-		return builder.toString();
+		return this.nombre;
 	}
 
 	@Override
