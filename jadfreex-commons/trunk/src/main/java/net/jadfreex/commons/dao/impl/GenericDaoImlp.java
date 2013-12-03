@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 //TODO Documentar
-public abstract class GenericDaoImlp<T, PK extends Serializable>
+public abstract class GenericDaoImlp<T extends Serializable, PK extends Serializable>
 		implements GenericDao<T, PK> {
 
 	protected static final Logger log = LoggerFactory
@@ -43,7 +43,8 @@ public abstract class GenericDaoImlp<T, PK extends Serializable>
 			throw new AppException("Error de acceso a datos", ex);
 		} catch (ConstraintViolationException ex) {
 			log.error("Error en la creacion del objeto", ex);
-			throw new AppException("Se esta violando una restriccion en la base de datos.", ex);
+			throw new AppException(
+					"Se esta violando una restriccion en la base de datos.", ex);
 		} catch (IllegalArgumentException ex) {
 			log.error("Error en la creacion del objeto", ex);
 			throw new AppException(
@@ -77,7 +78,8 @@ public abstract class GenericDaoImlp<T, PK extends Serializable>
 			throw new AppException(message, ex);
 		} catch (ConstraintViolationException ex) {
 			log.error("Error en la creacion del objeto", ex);
-			throw new AppException("Se esta violando una restriccion en la base de datos.", ex);
+			throw new AppException(
+					"Se esta violando una restriccion en la base de datos.", ex);
 		} catch (IllegalArgumentException ex) {
 			throw new AppException(
 					"Existen argumentos no validos al interntar actualizar le objeto",
@@ -95,7 +97,8 @@ public abstract class GenericDaoImlp<T, PK extends Serializable>
 			throw new AppException("Error de acceso a datos", ex);
 		} catch (ConstraintViolationException ex) {
 			log.error("Error en la creacion del objeto", ex);
-			throw new AppException("Se esta violando una restriccion en la base de datos.", ex);
+			throw new AppException(
+					"Se esta violando una restriccion en la base de datos.", ex);
 		} catch (IllegalArgumentException ex) {
 			log.error("Error en la creacion del objeto", ex);
 			throw new AppException(
@@ -131,9 +134,7 @@ public abstract class GenericDaoImlp<T, PK extends Serializable>
 
 	}
 
-	@SuppressWarnings({
-			"rawtypes", "unchecked"
-	})
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Class<T> getType() {
 		if (type == null) {
 			Class clazz = getClass();
