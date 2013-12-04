@@ -18,6 +18,11 @@ import javax.validation.constraints.Size;
 @Table(name = "tusuario")
 public class Usuario implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5761105719054679205L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "NIdUsuario")
