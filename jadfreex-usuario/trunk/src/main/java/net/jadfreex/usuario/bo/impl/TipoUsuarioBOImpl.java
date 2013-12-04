@@ -28,6 +28,7 @@ public class TipoUsuarioBOImpl implements TipoUsuarioBO {
 
 	@Override
 	public void create(TipoUsuario obj) {
+		log.debug("Iniciando el proceso de creación");
 		this.tipoUsuarioDAO.create(obj);
 	}
 
