@@ -1,8 +1,8 @@
 package net.jadfreex.usuario.dao.impl;
 
 import net.jadfreex.commons.dao.impl.GenericDaoImlp;
-import net.jadfreex.usuario.bean.TipoUsuario;
 import net.jadfreex.usuario.dao.TipoUsuarioDAO;
+import net.jadfreex.usuario.domain.TipoUsuario;
 
 import org.springframework.stereotype.Repository;
 

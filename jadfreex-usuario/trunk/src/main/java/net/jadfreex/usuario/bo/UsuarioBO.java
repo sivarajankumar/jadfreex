@@ -2,7 +2,7 @@ package net.jadfreex.usuario.bo;
 
 import java.util.Collection;
 
-import net.jadfreex.usuario.bean.Usuario;
+import net.jadfreex.usuario.domain.Usuario;
 
 //TODO Documentar
 public interface UsuarioBO {
