@@ -1,32 +1,36 @@
-package net.jadfreex.usuario.bean;
+package net.jadfreex.usuario.domain;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "ttipo_usuario")
-public class TipoUsuario {
+@Table(name = "tusuario")
+public class Usuario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "NIdTipoUsuario")
+	@Column(name = "NIdUsuario")
 	private Long id;
 
 	@NotNull
-	@Size(min = 3, max = 20)
+	@Size(min = 3, max = 50)
 	@Column(name = "VNombre", unique = true)
 	private String nombre;
 
-	@NotNull
-	@Size(min = 3, max = 200)
-	@Column(name = "VDescripcion")
-	private String descripcion;
+	@JoinColumn(name = "NIdTipoUsuario", referencedColumnName = "NIdTipoUsuario", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	private TipoUsuario tipoUsuario;
 
 	public Long getId() {
 		return id;
@@ -44,25 +48,30 @@ public class TipoUsuario {
 		this.nombre = nombre;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
 	}
 
 	@Override
 	public String toString() {
-		return this.nombre;
+		StringBuilder builder = new StringBuilder();
+		builder.append("Usuario [");
+		if (id != null)
+			builder.append("id=").append(id).append(", ");
+		if (nombre != null)
+			builder.append("nombre=").append(nombre);
+		builder.append("]");
+		return builder.toString();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((descripcion == null) ? 0 : descripcion.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
@@ -76,17 +85,10 @@ public class TipoUsuario {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof TipoUsuario)) {
+		if (!(obj instanceof Usuario)) {
 			return false;
 		}
-		TipoUsuario other = (TipoUsuario) obj;
-		if (descripcion == null) {
-			if (other.descripcion != null) {
-				return false;
-			}
-		} else if (!descripcion.equals(other.descripcion)) {
-			return false;
-		}
+		Usuario other = (Usuario) obj;
 		if (id == null) {
 			if (other.id != null) {
 				return false;

@@ -4,9 +4,9 @@ import java.util.Collection;
 
 import javax.validation.Validator;
 
-import net.jadfreex.usuario.bean.TipoUsuario;
 import net.jadfreex.usuario.bo.TipoUsuarioBO;
 import net.jadfreex.usuario.dao.TipoUsuarioDAO;
+import net.jadfreex.usuario.domain.TipoUsuario;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +25,11 @@ public class TipoUsuarioBOImpl implements TipoUsuarioBO {
 
 	@Autowired
 	private TipoUsuarioDAO tipoUsuarioDAO;
+
+	@Override
+	public void create(TipoUsuario obj) {
+		this.tipoUsuarioDAO.create(obj);
+	}
 
 	@Override
 	public Collection<TipoUsuario> findAll() {

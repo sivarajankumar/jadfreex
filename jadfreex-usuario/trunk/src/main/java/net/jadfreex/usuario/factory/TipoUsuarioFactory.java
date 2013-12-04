@@ -1,6 +1,6 @@
 package net.jadfreex.usuario.factory;
 
-import net.jadfreex.usuario.bean.TipoUsuario;
+import net.jadfreex.usuario.domain.TipoUsuario;
 
 //TODO Documentar
 public class TipoUsuarioFactory {
