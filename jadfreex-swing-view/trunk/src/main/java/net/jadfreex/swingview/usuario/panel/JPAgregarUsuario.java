@@ -12,10 +12,10 @@ import javax.swing.JTextField;
 
 import net.jadfreex.commons.exception.AppException;
 import net.jadfreex.swingview.commons.AppContext;
-import net.jadfreex.usuario.bean.TipoUsuario;
-import net.jadfreex.usuario.bean.Usuario;
 import net.jadfreex.usuario.bo.TipoUsuarioBO;
 import net.jadfreex.usuario.bo.UsuarioBO;
+import net.jadfreex.usuario.domain.TipoUsuario;
+import net.jadfreex.usuario.domain.Usuario;
 import net.jadfreex.usuario.factory.UsuarioFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
