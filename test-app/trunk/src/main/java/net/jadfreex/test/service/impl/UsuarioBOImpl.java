@@ -35,7 +35,7 @@ public class UsuarioBOImpl implements UsuarioBO {
 	Set<ConstraintViolation<Usuario>> violations = this.validator
 		.validate(obj);
 	if (!violations.isEmpty()) {
-	    String msg = "El usuario contiene errores: ";
+	    String msg = "";
 	    for (ConstraintViolation<Usuario> v : violations) {
 		msg += v.getPropertyPath() + ": " + v.getMessage();
 	    }
@@ -45,27 +45,49 @@ public class UsuarioBOImpl implements UsuarioBO {
     }
 
     public void update(Usuario obj) {
-	// TODO Auto-generated method stub
-
+	if (obj == null) {
+	    throw new AppException("El usuario no puede ser nulo");
+	}
+	Set<ConstraintViolation<Usuario>> violations = this.validator
+		.validate(obj);
+	if (!violations.isEmpty()) {
+	    String msg = "";
+	    for (ConstraintViolation<Usuario> v : violations) {
+		msg += v.getPropertyPath() + ": " + v.getMessage();
+	    }
+	    throw new AppException(msg);
+	}
+	this.usuarioDAO.update(obj);
     }
 
     public void delete(Usuario obj) {
-	// TODO Auto-generated method stub
-
+	if (obj == null) {
+	    throw new AppException("El usuario no puede ser nulo");
+	}
+	Set<ConstraintViolation<Usuario>> violations = this.validator
+		.validateProperty(obj, "id");
+	if (!violations.isEmpty()) {
+	    String msg = "";
+	    for (ConstraintViolation<Usuario> v : violations) {
+		msg += v.getPropertyPath() + ": " + v.getMessage();
+	    }
+	    throw new AppException(msg);
+	}
+	this.usuarioDAO.delete(obj);
     }
 
     public Usuario get(Long id) {
+	if (id == null) {
+	    throw new AppException("El id del usuario no puede ser nulo");
+	}
 	return this.usuarioDAO.get(id);
     }
 
     public Collection<Usuario> getAll() {
-	// TODO Auto-generated method stub
-	return null;
+	return this.usuarioDAO.getAll();
     }
 
     public Collection<Usuario> find(Map<String, Object> parameters) {
-	// TODO Auto-generated method stub
-	return null;
+	return this.usuarioDAO.find(parameters);
     }
-
 }

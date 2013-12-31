@@ -11,6 +11,7 @@ package net.jadfreex.commons.dao.impl;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.validation.ConstraintViolationException;
@@ -58,7 +59,7 @@ public class HibernateDAOImpl<T extends Serializable, PK extends Serializable>
     public void update(T obj) {
 	Session s = null;
 	try {
-	    s = this.getSessionFactory().getCurrentSession();
+	    s = this.getSessionFactory().openSession();
 	    s.update(obj);
 	} catch (HibernateException e) {// Operación
 	    throw new AppException("Error de hibernate");
@@ -79,7 +80,7 @@ public class HibernateDAOImpl<T extends Serializable, PK extends Serializable>
     public void delete(T obj) {
 	Session s = null;
 	try {
-	    s = this.getSessionFactory().getCurrentSession();
+	    s = this.getSessionFactory().openSession();
 	    s.delete(obj);
 	} catch (HibernateException e) {// Operación
 	    throw new AppException("Error de hibernate");
@@ -123,8 +124,8 @@ public class HibernateDAOImpl<T extends Serializable, PK extends Serializable>
     public Collection<T> getAll() {
 	Session s = null;
 	try {
-	    s = this.getSessionFactory().getCurrentSession();
-	    Query q = s.createQuery(String.format("FROM %s%", getType()
+	    s = this.getSessionFactory().openSession();
+	    Query q = s.createQuery(String.format("FROM %s", getType()
 		    .getSimpleName()));
 	    return q.list();
 	} catch (HibernateException e) {// Operación
@@ -142,10 +143,46 @@ public class HibernateDAOImpl<T extends Serializable, PK extends Serializable>
 	}
     }
 
+    @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public Collection<T> find(Map<String, Object> parameters) {
-	// TODO Auto-generated method stub
-	return null;
+	Session s = null;
+	StringBuilder sb = null;
+	try {
+	    s = this.getSessionFactory().openSession();
+	    sb = new StringBuilder(String.format("FROM %s", this.getType()
+		    .getSimpleName()));
+	    if (!parameters.isEmpty()) {
+		sb.append(" WHERE ");
+		Iterator<?> it = parameters.entrySet().iterator();
+		while (it.hasNext()) {
+		    Map.Entry<String, Object> obj = (Map.Entry<String, Object>) it
+			    .next();
+		    if (obj.getValue() instanceof String) {
+			sb.append(String.format("%s LIKE :%s", obj.getKey(),
+				obj.getValue()));
+		    } else {
+			sb.append(String.format("%s = :%s", obj.getKey(),
+				obj.getValue()));
+		    }
+		}
+	    }
+	    Query q = s.createQuery(sb.toString());
+	    q.setProperties(parameters);
+	    return q.list();
+	} catch (HibernateException e) {// Operación
+	    throw new AppException("Error de hibernate" + e.getMessage());
+	} catch (IllegalArgumentException e) {// Argumentos no validos
+	    throw new AppException("Argumentos no validos" + e.getMessage());
+	} catch (ConstraintViolationException e) {// Restricciones
+	    throw new AppException("Se violo una restriccion");
+	} finally {
+	    if (s != null) {
+		s.flush();
+		s.close();
+	    }
+	    System.gc();
+	}
     }
 
     @SuppressWarnings("unchecked")

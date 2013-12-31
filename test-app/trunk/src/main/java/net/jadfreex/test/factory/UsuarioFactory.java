@@ -25,4 +25,16 @@ public class UsuarioFactory {
 	return u;
     }
 
+    public static Usuario newInstance(Long id, String nombre, String apPaterno,
+	    String apMaterno, String username, String password) {
+	Usuario u = new Usuario();
+	u.setId(id);
+	u.setNombre(nombre);
+	u.setApPaterno(apPaterno);
+	u.setApMaterno(apMaterno);
+	u.setUsername(username);
+	u.setPassword(password);
+	return u;
+    }
+
 }
