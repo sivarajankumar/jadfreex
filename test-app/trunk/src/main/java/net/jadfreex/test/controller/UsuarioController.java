@@ -4,6 +4,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+
+import net.jadfreex.commons.cors.CORSFilter;
 import net.jadfreex.commons.exception.AppException;
 import net.jadfreex.test.entity.Usuario;
 import net.jadfreex.test.factory.UsuarioFactory;
@@ -12,11 +16,12 @@ import net.jadfreex.test.service.UsuarioBO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,27 +34,22 @@ public class UsuarioController {
     @Autowired
     private UsuarioBO usuarioBO;
 
-    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @RequestMapping("add")
+    @POST
     @ResponseBody
-    public String addUsuario(@RequestBody Usuario usuario) {
+    public String addUsuario(Usuario u) {
 	try {
-	    this.usuarioBO.add(usuario);
+	    this.usuarioBO.add(u);
 	} catch (AppException e) {
 	    return e.getMessage();
 	}
 	return "success";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST)
+    @RequestMapping("update")
+    @POST
     @ResponseBody
-    public String updateUsuario(@RequestParam("id") Long id,
-	    @RequestParam("nombre") String nombre,
-	    @RequestParam("apPaterno") String apPaterno,
-	    @RequestParam("apMaterno") String apMaterno,
-	    @RequestParam("username") String username,
-	    @RequestParam("password") String password) {
-	Usuario u = UsuarioFactory.newInstance(id, nombre, apPaterno,
-		apMaterno, username, password);
+    public String updateUsuario(Usuario u) {
 	try {
 	    this.usuarioBO.update(u);
 	} catch (AppException e) {
@@ -58,10 +58,10 @@ public class UsuarioController {
 	return "sucess";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    @RequestMapping("delete")
+    @POST
     @ResponseBody
-    public String deleteUsuario(
-	    @RequestParam(value = "id", required = true) Long id) {
+    public String deleteUsuario(@RequestParam("id") Long id) {
 	Usuario u = UsuarioFactory.newInstance(id);
 	try {
 	    this.usuarioBO.delete(u);
@@ -71,26 +71,35 @@ public class UsuarioController {
 	return "success";
     }
 
-    @RequestMapping(value = "get", method = RequestMethod.GET)
+    @RequestMapping(value = "get")
+    @GET
     @ResponseBody
-    public Usuario getUsuarioJSONParam(
-	    @RequestParam(value = "id", required = true) Long id) {
-	return this.usuarioBO.get(id);
+    public ResponseEntity<Usuario> getUsuarioRequest(@RequestParam("id") Long id) {
+	HttpHeaders header = CORSFilter.addAccessControlAllowOrigin();
+	ResponseEntity<Usuario> entity = new ResponseEntity<Usuario>(
+		this.usuarioBO.get(id), header, HttpStatus.OK);
+	return entity;
     }
 
-    @RequestMapping(value = "get/{id}", method = RequestMethod.GET)
+    @RequestMapping("get/{id}")
+    @GET
     @ResponseBody
-    public Usuario getUsuarioJSONPath(@PathVariable Long id) {
-	return this.usuarioBO.get(id);
+    public ResponseEntity<Usuario> getUsuarioPath(@PathVariable Long id) {
+	HttpHeaders header = CORSFilter.addAccessControlAllowOrigin();
+	ResponseEntity<Usuario> entity = new ResponseEntity<Usuario>(
+		this.usuarioBO.get(id), header, HttpStatus.OK);
+	return entity;
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @RequestMapping("list")
+    @GET
     @ResponseBody
     public Collection<Usuario> getAll() {
 	return this.usuarioBO.getAll();
     }
 
-    @RequestMapping(value = "find/{nombre}", method = RequestMethod.GET)
+    @RequestMapping("find/{nombre}")
+    @GET
     @ResponseBody
     public Collection<Usuario> findUsuario(@PathVariable String nombre) {
 	Map<String, Object> map = new HashMap<String, Object>();
