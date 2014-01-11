@@ -20,7 +20,6 @@ public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Min(1)
     @Column(name = "NIdUsuario")
     private Long id;
 
