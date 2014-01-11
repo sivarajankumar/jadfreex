@@ -37,13 +37,18 @@ public class UsuarioController {
     @RequestMapping("add")
     @POST
     @ResponseBody
-    public String addUsuario(Usuario u) {
+    public ResponseEntity<String> addUsuario(Usuario u) {
+	HttpHeaders header = CORSFilter.addAccessControlAllowOrigin();
+	ResponseEntity<String> entity = null;
 	try {
 	    this.usuarioBO.add(u);
 	} catch (AppException e) {
-	    return e.getMessage();
+	    entity = new ResponseEntity<String>(e.getMessage(), header,
+		    HttpStatus.OK);
+	    return entity;
 	}
-	return "success";
+	entity = new ResponseEntity<String>("success", header, HttpStatus.OK);
+	return entity;
     }
 
     @RequestMapping("update")
