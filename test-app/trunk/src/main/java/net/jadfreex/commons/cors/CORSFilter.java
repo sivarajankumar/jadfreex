@@ -19,17 +19,17 @@ public class CORSFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
+    public void doFilterInternal(HttpServletRequest request,
 	    HttpServletResponse response, FilterChain filterChain)
 	    throws ServletException, IOException {
-	if (request.getHeader("Access-Control-Request-Method") != null
-		&& "OPTIONS".equals(request.getMethod())) {
-	    response.addHeader("Access-Control-Allow-Origin", "*");
-	    response.addHeader("Access-Control-Allow-Methods",
-		    "GET, POST, PUT, DELETE");
-	    response.addHeader("Access-Control-Allow-Headers", "Content-Type");
-	    response.addHeader("Access-Control-Max-Age", "1800");
-	}
+	// if (request.getHeader("Access-Control-Request-Method") != null
+	// && "OPTIONS".equals(request.getMethod())) {
+	response.addHeader("Access-Control-Allow-Origin", "*");
+	response.addHeader("Access-Control-Allow-Methods",
+		"OPTIONS, GET, POST, PUT, DELETE");
+	response.addHeader("Access-Control-Allow-Headers", "Content-Type");
+	response.addHeader("Access-Control-Max-Age", "3600");
+	// }
 	filterChain.doFilter(request, response);
     }
 }

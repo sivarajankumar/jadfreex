@@ -37,43 +37,51 @@ public class UsuarioController {
     @RequestMapping("add")
     @POST
     @ResponseBody
-    public ResponseEntity<String> addUsuario(Usuario u) {
-	HttpHeaders header = CORSFilter.addAccessControlAllowOrigin();
-	ResponseEntity<String> entity = null;
+    public String addUsuario(Usuario u) {
+	String entity = null;
 	try {
 	    this.usuarioBO.add(u);
 	} catch (AppException e) {
-	    entity = new ResponseEntity<String>(e.getMessage(), header,
-		    HttpStatus.OK);
+	    entity = e.getMessage();
 	    return entity;
 	}
-	entity = new ResponseEntity<String>("success", header, HttpStatus.OK);
+	entity = "success";
 	return entity;
     }
 
     @RequestMapping("update")
     @POST
     @ResponseBody
-    public String updateUsuario(Usuario u) {
+    public ResponseEntity<String> updateUsuario(Usuario u) {
+	HttpHeaders headers = CORSFilter.addAccessControlAllowOrigin();
+	ResponseEntity<String> entity = null;
 	try {
 	    this.usuarioBO.update(u);
 	} catch (AppException e) {
-	    return e.getMessage();
+	    entity = new ResponseEntity<String>(e.getMessage(), headers,
+		    HttpStatus.OK);
+	    return entity;
 	}
-	return "sucess";
+	entity = new ResponseEntity<String>("success", headers, HttpStatus.OK);
+	return entity;
     }
 
     @RequestMapping("delete")
     @POST
     @ResponseBody
-    public String deleteUsuario(@RequestParam("id") Long id) {
+    public ResponseEntity<String> deleteUsuario(@RequestParam("id") Long id) {
+	HttpHeaders headers = CORSFilter.addAccessControlAllowOrigin();
+	ResponseEntity<String> entity = null;
 	Usuario u = UsuarioFactory.newInstance(id);
 	try {
 	    this.usuarioBO.delete(u);
 	} catch (AppException e) {
-	    return e.getMessage();
+	    entity = new ResponseEntity<>(e.getMessage(), headers,
+		    HttpStatus.OK);
+	    return entity;
 	}
-	return "success";
+	entity = new ResponseEntity<String>("success", headers, HttpStatus.OK);
+	return entity;
     }
 
     @RequestMapping(value = "get")

@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -40,7 +39,7 @@ public class Usuario implements Serializable {
 
     @NotNull
     @Size(min = 3, max = 50)
-    @Column(name = "VUsername")
+    @Column(name = "VUsername", unique = true)
     private String username;
 
     @NotNull
