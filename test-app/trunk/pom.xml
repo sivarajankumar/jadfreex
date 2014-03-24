@@ -6,14 +6,13 @@
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 
-	<name>test-app Maven Webapp</name>
+	<name>test-app</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>3.2.5.RELEASE</spring.version>
-		<!-- <spring.version>4.0.0.RELEASE</spring.version> -->
-		<hibernate.version>4.2.8.Final</hibernate.version>
+		<spring.version>4.0.2.RELEASE</spring.version>
+		<hibernate.version>4.3.4.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
@@ -38,7 +37,7 @@
 		<!-- <dependency> -->
 		<!-- <groupId>com.thetransactioncompany</groupId> -->
 		<!-- <artifactId>cors-filter</artifactId> -->
-		<!-- <version>1.9</version> -->
+		<!-- <version>1.9.2</version> -->
 		<!-- </dependency> -->
 
 		<!-- Hibernate -->
@@ -50,7 +49,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.0.1.Final</version>
+			<version>5.1.0.Final</version>
 		</dependency>
 
 		<!-- Jackson (JSON Mapper) -->
@@ -69,7 +68,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.27</version>
+			<version>5.1.29</version>
 		</dependency>
 
 		<!-- Taglibs -->
@@ -102,7 +101,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.5</version>
+			<version>1.7.6</version>
 		</dependency>
 
 		<!-- Test -->
