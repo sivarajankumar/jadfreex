@@ -95,7 +95,7 @@ public class EstadoController {
 		int n[][] = new int[5][];
 		Random r = new Random();
 		for (int i = 0; i < n.length; i++) {
-			n[i] = new int[] { r.nextInt(), r.nextInt() };
+			n[i] = new int[] { r.nextInt(100), r.nextInt(100) };
 		}
 		return n;
 	}
@@ -104,8 +104,7 @@ public class EstadoController {
 	@GET
 	@ResponseBody
 	public Collection<Estado> getAll() {
-		String color[] = { "black", "white", "red", "orange", "yellow", "aqua",
-				"greenyellow" };
+		String color[] = { "red", "orange", "yellow", "aqua" };
 		Random r = new Random();
 		int i;
 		Collection<Estado> col = this.usuarioBO.getAll();
