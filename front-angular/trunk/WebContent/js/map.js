@@ -22,7 +22,7 @@ function Map($scope, $http) {
     	        path.hover(
     				function(){
     					this.animate({
-    						fill: 'white',
+    						fill: 'greenyellow',
     					}, 100);
     				},
     				function(){
