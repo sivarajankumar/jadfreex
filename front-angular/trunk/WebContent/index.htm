@@ -3,16 +3,21 @@
 	<head>
 		<meta charset="UTF-8">
 
+		<link rel="stylesheet" type="text/css" href="css/jquery.jqplot.css" />
+
 		<script type="text/javascript" src="js/angular.min.js"></script>
 		<script type="text/javascript" src="js/raphael-min.js"></script>
 		<script type="text/javascript" src="js/flotr2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.jqplot.min.js"></script>
 		<script type="text/javascript" src="js/map.js"></script>
 		<script type="text/javascript" src="js/info.js"></script>
-
+		
 		<title>Mapa de México</title>
 	</head>
-	<body bgcolor="gray">
-		<div id="mapa" ng-controller="Map"></div>
-		<div id="info" style="width:800px;height:300px;margin:auto;" align="center"></div>
+	<body>
+		<div id="mapa" style="width:800px;height:450px;margin:auto;" ng-controller="Map"></div>
+		<div id="flotr2" style="width:800px;height:300px;margin:auto;" align="center"></div>
+		<div id="jqplot" style="width:800px;height:300px;margin:auto;"></div>
 	</body>
 </html>
